@@ -1,19 +1,12 @@
+import { truncateString } from "../../functions/functions";
 import { TaskItemProps } from "../../interface";
-
-function truncateString(str: string, maxLength: number) {
-  if (str.length <= maxLength) {
-    return str;
-  } else {
-    return str.slice(0, maxLength - 3) + "...";
-  }
-}
 
 export default function TaskItem(props: TaskItemProps) {
   const { id, taskTitle, taskDescription, status } = props.task;
   const { handleItemClick, handleUpdateTask } = props;
 
-  const title = truncateString(taskTitle, 20);
-  const desc = truncateString(taskDescription, 20);
+  const title = truncateString(taskTitle);
+  const desc = truncateString(taskDescription);
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     handleUpdateTask(id, event.target.checked);
@@ -29,6 +22,7 @@ export default function TaskItem(props: TaskItemProps) {
           type="checkbox"
           id="isDone"
           name="isDone"
+          className="checkboxInput"
           checked={status}
           onChange={handleStatusChange}
         />

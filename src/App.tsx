@@ -1,18 +1,14 @@
-import { useState, FocusEvent, useEffect } from "react";
+import { useState, FocusEvent } from "react";
 import "./App.css";
+import InputSection from "./components/InputSection/InputSection";
 import ModalWindow from "./components/ModalWindow/ModalWindow";
 import TaskItem from "./components/TaskItem/TaskItem";
-import { ITask } from "./interface";
+import { IErrors, ITask } from "./interface";
 
 const intialFormData = {
   taskTitle: "",
   taskDescription: "",
 };
-
-interface IErrors {
-  taskTitle?: string;
-  taskDescription?: string;
-}
 
 function App() {
   const [count, setCount] = useState<number>(1);
@@ -32,18 +28,15 @@ function App() {
     });
   };
 
-  const onSubmit = (event: any) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!formData.taskDescription && !formData.taskTitle) {
-      console.log("2 errors");
       return setErrors({
         ["taskTitle"]: "This field is empty",
         ["taskDescription"]: "This field is empty",
       });
     }
     if (!formData.taskTitle) {
-      console.log("title error");
-
       return setErrors((ers) => {
         return {
           ...ers,
@@ -52,7 +45,6 @@ function App() {
       });
     }
     if (!formData.taskDescription) {
-      console.log("desc error");
       return setErrors((ers) => {
         return {
           ...ers,
@@ -75,7 +67,7 @@ function App() {
 
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    const isEmpty = !!value.trim().length; // false / true
+    const isEmpty = !!value.trim().length;
     if (!isEmpty) {
       setErrors((state) => {
         return { ...state, [name]: `${name} is empty` };
@@ -89,8 +81,7 @@ function App() {
     });
   };
 
-  const handleItemClick = (id: any) => {
-    console.log(id);
+  const handleItemClick = (id: number) => {
     setSelectedItemId(id);
     setShowModal(true);
   };
@@ -118,39 +109,25 @@ function App() {
       <div className="wrapper">
         <h2 className="title">To do list</h2>
         <form className="inputsBlock" onSubmit={onSubmit}>
-          <section className="inputSection">
-            <label className="subtitle">Title:</label>
-            <input
-              onChange={handleChange}
-              value={formData.taskTitle}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
-              type="text"
-              className={errors["taskTitle"] ? "input error" : "input"}
-              placeholder="Task title..."
-              name="taskTitle"
-            />
-            {errors.taskTitle && (
-              <div className="errorMessage">This field is empty</div>
-            )}
-          </section>
-          <section className="inputSection">
-            <label className="subtitle">Description:</label>
-            <input
-              onChange={handleChange}
-              value={formData.taskDescription}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
-              type="text"
-              className={errors["taskDescription"] ? "input error" : "input"}
-              placeholder="Task description..."
-              name="taskDescription"
-            />
-            {errors.taskDescription && (
-              <div className="errorMessage">This field is empty</div>
-            )}
-          </section>
-          <input type="submit" className="btn" value="Create" />
+          <InputSection
+            title="Title"
+            name="taskTitle"
+            handleChange={handleChange}
+            formData={formData}
+            handleBlur={handleBlur}
+            handleFocus={handleFocus}
+            errors={errors}
+          />
+          <InputSection
+            title="Description"
+            name="taskDescription"
+            handleChange={handleChange}
+            formData={formData}
+            handleBlur={handleBlur}
+            handleFocus={handleFocus}
+            errors={errors}
+          />
+          <input type="submit" className="submitButton" value="Create" />
         </form>
         <div className="list">
           <legend className="header">
