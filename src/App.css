@@ -1,0 +1,88 @@
+.App {
+  max-width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #51768c;
+  color: #071826;
+  padding: 4rem 0;
+}
+
+.wrapper {
+  max-width: 60%;
+  margin: 0 auto;
+}
+.title {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.inputsBlock {
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 1.5rem 0;
+  justify-content: space-between;
+}
+
+.header {
+  background-color: #b4c8d9;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+  justify-items: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.item {
+  background-color: #a6998f;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+  justify-items: center;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  padding: 0.3rem 0;
+}
+
+.input {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1.3rem;
+  border-radius: 0.5rem;
+}
+
+.inputSection {
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+}
+.inputsBlock {
+  display: flex;
+  align-items: flex-end;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  text-align: start;
+  margin-bottom: 0.5rem;
+}
+
+.error {
+  border: 1px solid red;
+}
+
+.errorMessage {
+  color: red;
+  position: absolute;
+  bottom: -0.75rem;
+  left: 0.3rem;
+}
