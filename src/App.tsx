@@ -1,5 +1,6 @@
 import { useState, FocusEvent, useEffect } from "react";
 import "./App.css";
+import ModalWindow from "./components/ModalWindow/ModalWindow";
 import TaskItem from "./components/TaskItem/TaskItem";
 import { ITask } from "./interface";
 
@@ -14,10 +15,12 @@ interface IErrors {
 }
 
 function App() {
-  const [count, setCount] = useState<number>(0);
+  const [count, setCount] = useState<number>(1);
   const [formData, setFormData] = useState(intialFormData);
   const [tasksList, setTasksList] = useState<[] | ITask[]>([]);
   const [errors, setErrors] = useState<IErrors>(intialFormData);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -28,10 +31,6 @@ function App() {
       };
     });
   };
-
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
 
   const onSubmit = (event: any) => {
     event.preventDefault();
@@ -90,6 +89,30 @@ function App() {
     });
   };
 
+  const handleItemClick = (id: any) => {
+    console.log(id);
+    setSelectedItemId(id);
+    setShowModal(true);
+  };
+
+  const handleCloseWindow = () => {
+    setShowModal(false);
+  };
+
+  const handleUpdateTask = (taskId: number, status: boolean) => {
+    const updTasks = tasksList.map((task: ITask) => {
+      if (task.id === taskId) {
+        return {
+          ...task,
+          status,
+        };
+      } else {
+        return task;
+      }
+    });
+    setTasksList(updTasks);
+  };
+
   return (
     <div className="App">
       <div className="wrapper">
@@ -138,11 +161,23 @@ function App() {
           </legend>
           <section className="itemList">
             {tasksList.map((task) => (
-              <TaskItem task={task} key={task.id} />
+              <TaskItem
+                task={task}
+                key={task.id}
+                handleItemClick={handleItemClick}
+                handleUpdateTask={handleUpdateTask}
+              />
             ))}
           </section>
         </div>
       </div>
+      {showModal && selectedItemId && (
+        <ModalWindow
+          selectedItem={tasksList[selectedItemId - 1]}
+          handleCloseWindow={handleCloseWindow}
+          handleUpdateTask={handleUpdateTask}
+        />
+      )}
     </div>
   );
 }
