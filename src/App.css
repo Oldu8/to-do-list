@@ -96,6 +96,8 @@
   left: 0.25rem;
 }
 
+/* modal window */
+
 .modalWrapper {
   position: fixed;
   top: 0;
@@ -168,6 +170,8 @@
   margin-top: 2rem;
   padding: 0.3rem 1rem;
 }
+
+/* mobile-tablet */
 
 @media (max-width: 1366px) {
   .wrapper {

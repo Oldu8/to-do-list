@@ -21,12 +21,14 @@ export type ModalWindowProps = {
   handleUpdateTask: (taskId: number, status: boolean) => void;
 };
 
-export interface IErrors {
-  [key: string]: string | undefined;
-}
+export type ErrorKeys = "taskTitle" | "taskDescription";
+
+export type IErrors = {
+  [key in ErrorKeys]: string | undefined;
+};
 
 export type InputSectionProps = {
-  name: string;
+  name: ErrorKeys;
   title: string;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   formData: IFormData;

@@ -1,4 +1,3 @@
-import React from "react";
 import { InputSectionProps } from "../../interface";
 
 export default function InputSection(props: InputSectionProps) {
