@@ -1,16 +1,17 @@
+import { useDispatch } from "react-redux";
 import { truncateString } from "../../functions/functions";
+import { statusToggleTodo } from "../../redux/todosSlice";
 import { TaskItemProps } from "./types";
 
 export default function TaskItem(props: TaskItemProps) {
   const { id, taskTitle, taskDescription, status } = props.task;
-  const { handleItemClick, handleUpdateTask } = props;
+  const { handleItemClick } = props;
 
   const title = truncateString(taskTitle);
   const desc = truncateString(taskDescription);
 
-  const handleStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleUpdateTask(id, event.target.checked);
-  };
+  const dispatch = useDispatch();
+  const handleStatusChange = () => dispatch(statusToggleTodo(id));
 
   return (
     <div className="item" onClick={() => handleItemClick(id)}>

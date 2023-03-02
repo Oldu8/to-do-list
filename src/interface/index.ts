@@ -1,5 +1,5 @@
 export interface IFormData {
-  [key: string]: string | undefined;
+  [key: string]: string;
 }
 
 export interface ITask {

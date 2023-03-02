@@ -3,7 +3,10 @@ import "./App.css";
 import InputSection from "./components/InputSection/InputSection";
 import ModalWindow from "./components/ModalWindow/ModalWindow";
 import TaskItem from "./components/TaskItem/TaskItem";
-import { IErrors, ITask } from "./interface";
+import { IErrors, IFormData, ITask } from "./interface";
+import { useSelector, useDispatch } from "react-redux";
+import { addTodo } from "./redux/todosSlice";
+import { RootState } from "./redux/interfaces";
 
 const intialFormData = {
   taskTitle: "",
@@ -11,12 +14,16 @@ const intialFormData = {
 };
 
 function App() {
-  const [count, setCount] = useState<number>(1);
   const [formData, setFormData] = useState(intialFormData);
-  const [tasksList, setTasksList] = useState<[] | ITask[]>([]);
   const [errors, setErrors] = useState<IErrors>(intialFormData);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+
+  const todos = useSelector((state: RootState) => state.todos);
+  const dispatch = useDispatch();
+  const addTask = (item: IFormData) => {
+    dispatch(addTodo(item));
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -30,13 +37,14 @@ function App() {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!formData.taskDescription && !formData.taskTitle) {
+    const { taskDescription, taskTitle } = formData;
+    if (!taskDescription && !taskTitle) {
       return setErrors({
         ["taskTitle"]: "Title field is empty",
         ["taskDescription"]: "Description field is empty",
       });
     }
-    if (!formData.taskTitle) {
+    if (!taskTitle) {
       return setErrors((ers) => {
         return {
           ...ers,
@@ -44,7 +52,7 @@ function App() {
         };
       });
     }
-    if (!formData.taskDescription) {
+    if (!taskDescription) {
       return setErrors((ers) => {
         return {
           ...ers,
@@ -52,16 +60,7 @@ function App() {
         };
       });
     }
-
-    const newTask = {
-      ...formData,
-      id: count,
-      status: false,
-    };
-    setTasksList((state) => {
-      return [...state, newTask];
-    });
-    setCount((state) => state + 1);
+    addTask({ ...formData });
     setFormData(intialFormData);
   };
 
@@ -88,20 +87,6 @@ function App() {
 
   const handleCloseWindow = () => {
     setShowModal(false);
-  };
-
-  const handleUpdateTask = (taskId: number, status: boolean) => {
-    const updTasks = tasksList.map((task: ITask) => {
-      if (task.id === taskId) {
-        return {
-          ...task,
-          status,
-        };
-      } else {
-        return task;
-      }
-    });
-    setTasksList(updTasks);
   };
 
   return (
@@ -137,12 +122,11 @@ function App() {
             <li className="headerItem">STATUS</li>
           </legend>
           <section className="itemList">
-            {tasksList.map((task) => (
+            {todos.map((task) => (
               <TaskItem
                 task={task}
                 key={task.id}
                 handleItemClick={handleItemClick}
-                handleUpdateTask={handleUpdateTask}
               />
             ))}
           </section>
@@ -150,9 +134,8 @@ function App() {
       </div>
       {showModal && selectedItemId && (
         <ModalWindow
-          selectedItem={tasksList[selectedItemId - 1]}
+          taskId={selectedItemId}
           handleCloseWindow={handleCloseWindow}
-          handleUpdateTask={handleUpdateTask}
         />
       )}
     </div>

@@ -168,12 +168,27 @@
 .modalButton {
   max-width: 5rem;
   margin-top: 2rem;
-  padding: 0.3rem 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.buttonsBlock {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modalError {
+  text-align: center;
+  padding: 1.5rem 0;
+  font-weight: bold;
+  font-size: 2rem;
+  width: 30%;
+  height: 20%;
+  background-color: #ccc;
 }
 
 /* mobile-tablet */
 
-@media (max-width: 1366px) {
+@media (max-width: 768px) {
   .wrapper {
     max-width: 80%;
   }

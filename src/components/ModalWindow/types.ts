@@ -1,7 +1,6 @@
 import { ITask } from "../../interface";
 
 export type ModalWindowProps = {
-  selectedItem: ITask;
+  taskId: number;
   handleCloseWindow: () => void;
-  handleUpdateTask: (taskId: number, status: boolean) => void;
 };
