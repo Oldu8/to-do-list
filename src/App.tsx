@@ -32,15 +32,15 @@ function App() {
     event.preventDefault();
     if (!formData.taskDescription && !formData.taskTitle) {
       return setErrors({
-        ["taskTitle"]: "This field is empty",
-        ["taskDescription"]: "This field is empty",
+        ["taskTitle"]: "Title field is empty",
+        ["taskDescription"]: "Description field is empty",
       });
     }
     if (!formData.taskTitle) {
       return setErrors((ers) => {
         return {
           ...ers,
-          ["taskTitle"]: "This field is empty",
+          ["taskTitle"]: "Title field is empty",
         };
       });
     }
@@ -48,7 +48,7 @@ function App() {
       return setErrors((ers) => {
         return {
           ...ers,
-          ["taskDescription"]: "This field is empty",
+          ["taskDescription"]: "Description field is empty",
         };
       });
     }

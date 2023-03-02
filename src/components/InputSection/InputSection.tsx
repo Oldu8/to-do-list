@@ -1,4 +1,4 @@
-import { InputSectionProps } from "../../interface";
+import { InputSectionProps } from "./types";
 
 export default function InputSection(props: InputSectionProps) {
   const {
@@ -23,7 +23,9 @@ export default function InputSection(props: InputSectionProps) {
         placeholder={`Enter ${title}`}
         name={name}
       />
-      {errors[name] && <div className="errorMessage">This field is empty</div>}
+      {errors[name] && (
+        <div className="errorMessage">{`${title} field is empty`}</div>
+      )}
     </section>
   );
 }

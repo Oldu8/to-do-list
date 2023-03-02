@@ -1,5 +1,5 @@
 import React from "react";
-import { ModalWindowProps } from "../../interface";
+import { ModalWindowProps } from "./types";
 
 function ModalWindow(props: ModalWindowProps) {
   const { id, taskTitle, taskDescription, status } = props.selectedItem;

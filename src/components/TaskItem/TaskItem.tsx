@@ -1,5 +1,5 @@
 import { truncateString } from "../../functions/functions";
-import { TaskItemProps } from "../../interface";
+import { TaskItemProps } from "./types";
 
 export default function TaskItem(props: TaskItemProps) {
   const { id, taskTitle, taskDescription, status } = props.task;
