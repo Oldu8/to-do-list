@@ -1,3 +1,5 @@
+import React, { useCallback } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { truncateString } from "../../functions/functions";
 import { statusToggleTodo } from "../../redux/todosSlice";
@@ -7,11 +9,29 @@ export default function TaskItem(props: TaskItemProps) {
   const { id, taskTitle, taskDescription, status } = props.task;
   const { handleItemClick } = props;
 
+  // const handleItemClick = (id: number) => console.log("fucking func", id);
+  useEffect(() => {
+    console.log("Did mount: ", id);
+  }, []);
+  // componentDidUpdate
+  useEffect(() => {
+    console.log("Did updated: ", id);
+  }, [props]);
+  // componentWillUnmount
+  useEffect(() => {
+    return () => {
+      console.log("Did unmount: ", id);
+    };
+  }, []);
+
   const title = truncateString(taskTitle);
   const desc = truncateString(taskDescription);
 
   const dispatch = useDispatch();
-  const handleStatusChange = () => dispatch(statusToggleTodo(id));
+  const handleStatusChange = useCallback(
+    () => dispatch(statusToggleTodo(id)),
+    [dispatch, id]
+  );
 
   return (
     <div className="item" onClick={() => handleItemClick(id)}>
@@ -31,3 +51,5 @@ export default function TaskItem(props: TaskItemProps) {
     </div>
   );
 }
+
+export const MemoizedTaskItem = React.memo(TaskItem);
