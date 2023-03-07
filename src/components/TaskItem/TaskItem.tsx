@@ -5,11 +5,10 @@ import { truncateString } from "../../functions/functions";
 import { statusToggleTodo } from "../../redux/todosSlice";
 import { TaskItemProps } from "./types";
 
-export default function TaskItem(props: TaskItemProps) {
+export function TaskItem(props: TaskItemProps) {
   const { id, taskTitle, taskDescription, status } = props.task;
   const { handleItemClick } = props;
 
-  // const handleItemClick = (id: number) => console.log("fucking func", id);
   useEffect(() => {
     console.log("Did mount: ", id);
   }, []);
@@ -30,7 +29,7 @@ export default function TaskItem(props: TaskItemProps) {
   const dispatch = useDispatch();
   const handleStatusChange = useCallback(
     () => dispatch(statusToggleTodo(id)),
-    [dispatch, id]
+    [id]
   );
 
   return (

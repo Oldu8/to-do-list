@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import "./App.css";
 import ModalWindow from "./components/ModalWindow/ModalWindow";
-import MemoizedTaskItem from "./components/TaskItem/TaskItem";
+import { MemoizedTaskItem } from "./components/TaskItem/TaskItem";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/interfaces";
 import InputControlls from "./components/InputControlls/InputControlls";
@@ -13,10 +13,6 @@ function App() {
   const handleItemClick = useCallback((id: number) => {
     setSelectedItemId(id);
   }, []);
-
-  // const handleItemClick = (id: number) => {
-  //   setSelectedItemId(id);
-  // };
 
   const handleCloseWindow = () => {
     setSelectedItemId(null);
