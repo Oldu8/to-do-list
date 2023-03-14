@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { truncateString } from "../../functions/functions";
 import { statusToggleTodo } from "../../redux/todosSlice";
@@ -8,20 +7,6 @@ import { TaskItemProps } from "./types";
 export function TaskItem(props: TaskItemProps) {
   const { id, taskTitle, taskDescription, status } = props.task;
   const { handleItemClick } = props;
-
-  useEffect(() => {
-    console.log("Did mount: ", id);
-  }, []);
-  // componentDidUpdate
-  useEffect(() => {
-    console.log("Did updated: ", id);
-  }, [props]);
-  // componentWillUnmount
-  useEffect(() => {
-    return () => {
-      console.log("Did unmount: ", id);
-    };
-  }, []);
 
   const title = truncateString(taskTitle);
   const desc = truncateString(taskDescription);

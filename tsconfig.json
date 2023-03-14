@@ -16,6 +16,10 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "../../../dlt-app/client/types/request.ts",
+    "../../../dlt-app/client/store/functions.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
